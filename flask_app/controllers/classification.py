@@ -12,13 +12,18 @@ def predict():
     data = {"text":request.form['text_input']}
     processed_text = RobberyAi.preprocess_text(data['text'])
     y_hat = RobberyAi.predict(data['text'])
+    y_hat_delitos_validados = RobberyAi.predict_delitos_validados(data['text'])
     response = {'input':data['text'],
-                'prediction':y_hat}
+                'prediction_del_seguimeinto':y_hat,
+                'prediction_del_validados':y_hat_delitos_validados}
+    # print(response)
     return render_template("prediction.html", 
                             # relato=data['text'],
                             relato=processed_text,
                             clase=y_hat[0]['label'],
-                            probabilidad=y_hat[0]['score']*100)
+                            probabilidad=y_hat[0]['score']*100,
+                            clase_validados=y_hat_delitos_validados[0]['label'],
+                            probabilidad_validados=y_hat_delitos_validados[0]['score']*100)
 
 
 @app.route('/demo')
