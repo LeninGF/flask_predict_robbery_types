@@ -1,0 +1,36 @@
+{% extends 'template.html' %}
+{% block title %}
+    ¿Cómo funciona RobosAI
+{% endblock %}
+{% block content %}
+    <h1 class="text-center text-bg-danger">RobosAI</h1>
+    <p class=""><strong>RobosAI</strong> es un modelo de <strong>Machine Learning</strong> de <strong>Prcesamiento de Lenguaje Natural</strong>(PNL, por sus siglas en inglés)
+    que permite clasificar texto. Es decir, dado un relato de los hechos, correspondiente a una <strong>Noticia del Delito(NDD)</strong> de <strong>Robo</strong>, extrae características representantivas del texto (<strong>feature learning</strong>)
+    que permiten generar una función relacional <strong>probabilística</strong> que mapea el  texto con las 6 categorías que utiliza la <i class="fa fa-italic" aria-hidden="true">Comisión Especial de Estadística de Seguridad, Justicia, Crimen y Transparencia</i> 
+    </p>
+    <p>Formalizando, el problema a resolver consiste en obtener la siguiente función</p>
+    
+    <p class="text-center">\(f: \mathbb{Z}^{(N,\lambda,2)} \longrightarrow \mathbb{Z}^k\) </p>
+    
+    <p>Donde \(N, \lambda\) y \(k\) son: la cantidad de ejemplos o muestras, la longitud máxima de la secuencia de texto y el número de categorías (i.e.\(k=6\) ). El modelo de RobosAI queda representado por</p>
+    <p class="text-center">$$\mathcal{Y}^{T} = \mathbb{F_{T}} \left< \phi^{S}(D^{S}), \mathcal{D}^{T} \right> = \phi^{T}(D^T) $$</p>
+    
+    Donde la operación de \(\mathbb{F_{T}}\) representa el ajuste fino (<strong>Fine tuning</strong>) del modelo original sobre el conjunto de datos de entrenamiento. El modelo original utilizado es: <a href="https://huggingface.co/distilbert-base-multilingual-cased"><strong>distilbert-base-multilingual-cased</strong></a>
+    <h2>Tokenización</h2>
+    La tokenización consiste en representar la secuencia de texto en forma numérica mediante un par de tensores de entrada \(\boldsymbol{\nu} \in \mathbb{Z}^{\lambda}\) y máscara \(\boldsymbol{\tau} \in \mathbb{Z}^\lambda\). En el siguiente ejemplo, escriba un texto o copie un relato de una Ndd para obtener la representación de <strong>embeddings</strong> 
+    <div class="container">
+        <form action="/tokenizeme" method="post">
+            <div class="form-group">
+                <label for="" class="text-lg-center" style=""></label>
+                <textarea class="form-control" rows="5" id="relato" name="text_input"></textarea>
+                <!-- <input type="textarea" class="form-control" name="text_input" id="" aria-describedby="helpId" placeholder="Relato..."> -->
+                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+            </div>
+            <div class="d-flex justify-content-center m-3">
+                <button type="submit" class="btn btn-primary">Tokenizar</button>
+            </div>
+        </form>
+    </div>
+    {{embeddings}}
+
+{% endblock %}

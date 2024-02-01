@@ -1,0 +1,48 @@
+{% extends 'template.html' %}
+{% block title %}Demo{% endblock %}
+{% block content %}
+    <h1>Demo Modelo Robo-AI</h1>
+    <p>Comprobación del funcionamiento del modelo Robo-AI</p>
+    <ol>
+        <li>Se cargan 10 relatos de los hechos aleatorios desde el archivo de testing del mes de junio</li>
+        <li>Se realiza la predicción de cada uno de los textos usando el modelo entrenado</li>
+        <li>Se presenta una tabla comparativa: etiqueta vs predicción</li>
+    </ol>
+    <h2>Observaciones</h2>
+    <ul>
+        <li><strong>Nota:</strong> El modelo es probabilístico por lo tanto la predicción se acompañara de un score de <b>Softmax</b> con respecto a la etiqueta predicha</li>
+        <li>El modelo predice la etiqueta <strong>delitos_seguimiento</strong></li>
+        <li>Se asume que el <strong>etiquetado manual</strong> es correcto</li>
+        <li>La columna<strong>desagregacion</strong> corresponde a registros SIAF</li>
+        <li>La columna<strong>delitos_seguimiento</strong> corresponde a etiqueta producida en Comisión Interinstitucional</li>
+        <li>La columna<strong>etiqueta_prediccion</strong> corresponde a la predicción realizada por el modelo <strong>Robos AI</strong></li>
+    </ul>
+    <h2>Pruebas</h2>    
+    <table class="table table-striped table-hover caption-top">
+        <caption>Etiquetas de Desagregación de Robo (muestra aleatoria de 10 Ndd)</caption>
+        <thead>
+            <tr>
+                {% for col in column_names %}
+                    <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for row in row_data %}
+                <tr>
+                    {% for col, row_ in zip(column_names, row) %}
+                        <td scope="row">{{row_}}</td>    
+                    {% endfor %}
+                    
+                </tr>    
+            {% endfor %}
+            
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center m-3">
+        <a href="{{url_for('show_demo')}}">
+            <button>Consulta Nueva</button>
+        </a>
+    </div>
+{% endblock %}
+    

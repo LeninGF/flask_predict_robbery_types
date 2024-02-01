@@ -1,0 +1,20 @@
+{% extends 'template.html' %}
+{% block title %}Consultar{% endblock %}
+{% block content %}
+    <h1 class="text-center">Robos AI</h1>
+    <h2 class="text-center">Predicción de Etiqueta Desagregación de Robos</h2>
+    <div class="container">
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <label for="" class="text-lg-center" style="">Escriba el relato</label>
+                <textarea class="form-control" rows="5" id="relato" name="text_input"></textarea>
+                <!-- <input type="textarea" class="form-control" name="text_input" id="" aria-describedby="helpId" placeholder="Relato..."> -->
+                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+            </div>
+            <div class="d-flex justify-content-center m-3">
+                <button type="submit" class="btn btn-primary">Consultar</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+    
