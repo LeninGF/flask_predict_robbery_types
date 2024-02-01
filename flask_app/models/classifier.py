@@ -5,11 +5,13 @@ import re
 
 
 class RobberyAi:
-    PATH_MODEL = '/home/falconiel/ML_Models/robbery_tf20221113'
+    PATH_MODEL = '/home/falconiel/ML_Models/robbery_tf20221113' # delitos seguimiento
+    PATH_MODEL_DELITOS_VALIDADOS = '/home/falconiel/ML_Models/robbery_validados_tf20231211' #delitos_validados
     # model_tf = (TFAutoModelForSequenceClassification.from_pretrained(PATH_MODEL)) # para usar este modo hay que previamente tokenizar y dar formato de tensor al texto
     model_ckpt = "distilbert-base-multilingual-cased"
     tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
     classifier = pipeline("text-classification", model=PATH_MODEL, tokenizer=tokenizer)
+    classifier_validados = pipeline("text-classification", model=PATH_MODEL_DELITOS_VALIDADOS, tokenizer=tokenizer)
     SEQ_LEN = 300
     
     def __init__(self, data):
@@ -20,7 +22,12 @@ class RobberyAi:
         data_processed = cls.preprocess_text(data)
         y_hat = cls.classifier(data_processed, truncation=True)
         return y_hat
-    
+    @classmethod 
+    def predict_delitos_validados(cls, data):
+        # adding text formatting for data, according to operations during training. Do I receive one by one or a list of texts?
+        data_processed = cls.preprocess_text(data)
+        y_hat = cls.classifier_validados(data_processed, truncation=True)
+        return y_hat
     @classmethod
     def load_model_tf(cls):
         return pipeline("text-classification", model=cls.PATH_MODEL, tokenizer=cls.tokenizer)
